@@ -1,24 +1,33 @@
-from utils.torch_utils import select_device, time_sync
-from utils.plots import Annotator, colors
-from utils.general import non_max_suppression,  scale_coords, set_logging, xyn2xy
-from utils.datasets import LoadStreams
-from models.experimental import attempt_load
-import sys
-from pathlib import Path
-
-from tensorflow.keras.models import load_model
-import cv2
-from deep_sort_realtime.deepsort_tracker import DeepSort
-
-import torch
-import torch.backends.cudnn as cudnn
-import numpy as np
 from utils.my_module import predict_clf, remake_point
+import numpy as np
+import torch.backends.cudnn as cudnn
+import torch
+import cv2
+from tensorflow.keras.models import load_model
+from pathlib import Path
+import sys
+from models.experimental import attempt_load
+from utils.datasets import LoadStreams
+from utils.general import non_max_suppression,  scale_coords, set_logging, xyn2xy
+from utils.plots import Annotator, colors
+from utils.torch_utils import select_device, time_sync
+import os
+
+
+from deep_sort_pytorch.deep_sort import DeepSort
+
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
+
 FILE = Path(__file__).resolve()
 sys.path.append(FILE.parents[0].as_posix())  # add yolov5/ to path
 
 # load model
-model_gender = load_model("./h5/gender/weights-23-0.93.hdf5")
+# model_gender = load_model("./h5/gender/weights-23-0.93.hdf5")
 #
 
 
